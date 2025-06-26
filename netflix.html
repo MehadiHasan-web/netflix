@@ -102,5 +102,36 @@
   </div>
 </footer>
 
+<script>
+  const users = [];
+
+  document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault(); // stop real form submission
+
+    const email = document.querySelector('input[type="email"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+
+    // if (email && password) {
+    //   users.push({
+    //     person: `Person ${users.length + 1}`,
+    //     email,
+    //     password
+    //   });
+    fetch('./users.json')
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('userList');
+      data.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = `${user.person}: ${user.email} (${user.password})`;
+        list.appendChild(li);
+      });
+    })
+    .catch(err => console.error("Failed to load JSON:", err));
+
+
+  });
+</script>
+
 </body>
 </html>
